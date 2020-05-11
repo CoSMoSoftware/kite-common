@@ -2,7 +2,7 @@
  * Copyright (C) CoSMo Software Consulting Pte. Ltd. - All Rights Reserved
 */
 
-const {AllureStepReport, KiteTestError, Status} = require('../report');
+const {AllureStepReport, KiteTestError, Status, StatusDetails} = require('../report');
 
 /**
  * @class TestStep
@@ -37,14 +37,19 @@ class TestStep {
         this.skip();
       }
     } catch (error) {
+      let statusDetails = new StatusDetails();
       if(error instanceof KiteTestError) {
+        statusDetails.setKnown(true);
         console.log(error.message);
         KiteBaseTest.report.status = error.status;
       } else {
+        statusDetails.setFlaky(true);
         console.log(error);
         KiteBaseTest.report.status = Status.BROKEN;
       }
+      statusDetails.setMessage(error.message);
       this.report.setStatus(KiteBaseTest.report.status);
+      this.report.details = statusDetails;
     } finally {
       await this.finish();
       await KiteBaseTest.report.addStepReport(this.report.getJsonBuilder()); 

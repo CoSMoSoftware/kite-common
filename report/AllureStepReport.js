@@ -50,6 +50,9 @@ class AllureStepReport extends Entity {
     this.ignore = stepReport.ignore;
     if (this.status === Status.PASSED && !(stepReport.status === Status.SKIPPED)) {
       this.status = stepReport.status;
+      if (typeof stepReport.details !== 'undefined') {
+        this.details = stepReport.details;
+      }
     } else {
       if (stepReport.status === Status.PASSED) {
         this.status = stepReport.status;
@@ -131,7 +134,7 @@ class AllureStepReport extends Entity {
     }
     builder['attachments'] = attArray;
 
-    if (typeof this.details === "undefined") {
+    if (typeof this.details !== "undefined") {
       builder['statusDetails'] = this.details;
     }
 

@@ -15,4 +15,4 @@ exports.Parameter = require('./Parameter');
 exports.Reporter = require('./Reporter');
 exports.Stage = require('./Stage');
 exports.Status = require('./Status');
-exports.StatusDetail = require('./StatusDetails');
+exports.StatusDetails = require('./StatusDetails');
