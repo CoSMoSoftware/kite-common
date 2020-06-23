@@ -82,9 +82,10 @@ const getChromeOptions = function(capabilities) {
 
   if (capability.headless) {
     chromeOptions['args'].push('--headless');
-  }
-  if (capability.windowSize) {
-    chromeOptions['args'].push("window-size=" + capabilities.windowSize);
+  } else {
+		if (typeof capabilities.windowSize !== 'undefined' && capabilities.windowSize !== 'undefined') {
+			chromeOptions['args'].push("--window-size=" + capabilities.windowSize);
+		}
   }
   if (capability.flags) {
     for(let flag in capability.flags) {
